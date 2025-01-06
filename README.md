@@ -109,3 +109,149 @@
   ```java
   @Query("SELECT u FROM User u WHERE u.name LIKE %?1%")
   List<User> findByNameContaining(String name);
+
+  
+8. Lambdas
+Lambdas are anonymous functions that allow you to treat functionality as a method argument or create a function to be executed later.
+
+Syntax:
+java
+Copy code
+(parameters) -> expression
+Examples:
+No parameters:
+
+java
+Copy code
+() -> System.out.println("Hello, world!");
+With parameters:
+
+java
+Copy code
+(a, b) -> a + b;
+Single line expression:
+
+java
+Copy code
+(a, b) -> a * b;
+Multiple lines:
+
+java
+Copy code
+(a, b) -> {
+    int sum = a + b;
+    return sum;
+}
+Use case:
+Lambdas are used primarily with functional interfaces. For example, using Comparator to sort a list of strings:
+
+java
+Copy code
+List<String> list = Arrays.asList("banana", "apple", "cherry");
+list.sort((a, b) -> a.compareTo(b));
+
+
+9. Method References
+Method references provide a shorthand way to call a method. They enhance readability and simplify the code by referring to methods by their names instead of using lambdas.
+
+Types of Method References:
+Static method reference:
+
+java
+Copy code
+ClassName::staticMethodName
+Example:
+
+java
+Copy code
+Math::max
+Instance method reference (for a specific object):
+
+java
+Copy code
+instance::instanceMethodName
+Example:
+
+java
+Copy code
+String str = "hello";
+str::toUpperCase
+Instance method reference (for an object of a particular type):
+
+java
+Copy code
+ClassName::instanceMethodName
+Example:
+
+java
+Copy code
+String::toUpperCase
+Constructor reference:
+
+java
+Copy code
+ClassName::new
+Example:
+
+java
+Copy code
+ArrayList::new
+Use case:
+Instead of a lambda expression:
+
+java
+Copy code
+list.forEach(s -> System.out.println(s));
+You can use:
+
+java
+Copy code
+list.forEach(System.out::println);
+10. Map
+Map is a method of the Stream interface that transforms each element in the stream using a given function. It takes a function as an argument and applies it to each element, returning a new stream.
+
+Syntax:
+java
+Copy code
+Stream<T> map(Function<? super T, ? extends R> mapper);
+Example:
+java
+Copy code
+List<String> names = Arrays.asList("John", "Paul", "George", "Ringo");
+List<String> upperNames = names.stream()
+                               .map(String::toUpperCase)
+                               .collect(Collectors.toList());
+Use case:
+Transforming a list of integers to their squares:
+
+java
+Copy code
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+List<Integer> squares = numbers.stream()
+                               .map(n -> n * n)
+                               .collect(Collectors.toList());
+11. Filter
+Filter is a method of the Stream interface used to exclude elements from a stream that don't match a given condition. It returns a new stream consisting of elements that satisfy the provided predicate.
+
+Syntax:
+java
+Copy code
+Stream<T> filter(Predicate<? super T> predicate);
+Example:
+java
+Copy code
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+List<Integer> evenNumbers = numbers.stream()
+                                   .filter(n -> n % 2 == 0)
+                                   .collect(Collectors.toList());
+Use case:
+Filtering a list to retain only elements greater than 5:
+
+java
+Copy code
+List<Integer> numbers = Arrays.asList(1, 5, 10, 20);
+List<Integer> filtered = numbers.stream()
+                                .filter(n -> n > 5)
+                                .collect(Collectors.toList());
+Conclusion
+Lambdas, Method References, Map, and Filter are key elements in functional programming in Java. They enable more declarative and concise code, reducing boilerplate and enhancing readability. By embracing functional techniques, you can write cleaner and more efficient program
